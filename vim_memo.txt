@@ -1,0 +1,6 @@
+2022/02/10 最近入れたプラグインとマネージャー
+
+dein.vim : vim のプラグインマネージャー
+  install: https://dezanari.com/deinvim-install/
+jedi.vim : pythonコード補完のプラグイン
+  install: https://yuukiyg.hatenablog.jp/entry/2018/07/29/152620
