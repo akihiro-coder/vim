@@ -4,19 +4,37 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/home/akihiro/.cache/repos/github.com/Shougo/dein.vim
+set runtimepath+=/home/akihiro/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-call dein#begin('/home/akihiro/.cache')
+call dein#begin('/home/akihiro/.cache/dein')
 
 " Let dein manage dein
 " Required:
-call dein#add('/home/akihiro/.cache/repos/github.com/Shougo/dein.vim')
+call dein#add('/home/akihiro/.cache/dein/repos/github.com/Shougo/dein.vim')
 
 " Add or remove your plugins here like this:
+
+" python complementation
+call dein#add('davidhalter/jedi-vim')
+" brackets complementation
+call dein#add('cohama/lexima.vim')
+" pep8 regulation checker 
+" call dein#add('andviro/flake8-vim')
+
+call dein#add('Shougo/deoplete.nvim')
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
+let g:deoplete#enable_at_startup = 1
+
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-call dein#add('davidhalter/jedi-vim')
+
+
+
+
 
 " Required:
 call dein#end()
@@ -31,6 +49,11 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+
+
+
+
 
 
 " 行番号の表示
@@ -83,3 +106,37 @@ if has('vim_starting')
     let &t_SR .= "\e[4 q"
 endif
 
+" F3 key relative number display change
+nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
+
+
+" <F5>で編集中のファイルを実行
+nmap <F5> :!python3 %
+
+
+
+"autopep8を<sift>+fで実行
+"pip install autopep8(下の記述の前に実行しておく)
+function! Preserve(command)
+    " Save the last search.
+    let search = @/
+    " Save the current cursor position.
+    let cursor_position = getpos('.')
+    " Save the current window position.
+    normal! H
+    let window_position = getpos('.')
+    call setpos('.', cursor_position)
+    " Execute the command.
+    execute a:command
+    " Restore the last search.
+    let @/ = search
+    " Restore the previous window position.
+    call setpos('.', window_position)
+    normal! zt
+    " Restore the previous cursor position.
+    call setpos('.', cursor_position)
+endfunction
+function! Autopep8()
+    call Preserve(':silent %!autopep8 --ignore=E501 -')
+endfunction
+autocmd FileType python nnoremap <S-f> :call Autopep8()<CR>
