@@ -140,3 +140,24 @@ function! Autopep8()
     call Preserve(':silent %!autopep8 --ignore=E501 -')
 endfunction
 autocmd FileType python nnoremap <S-f> :call Autopep8()<CR>
+
+
+
+
+" shift + h -> start
+" shift + l -> end
+noremap <S-h> 0
+noremap <S-l> $
+ 
+ 
+map  W <Plug>(easymotion-bd-w)
+nmap W <Plug>(easymotion-overwin-w)
+nmap S <Plug>(easymotion-overwin-f2)
+
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+nmap <S-w> <C-w><C-w>
+ 
+ 
+" inoremap <S-space> <ESC>
+map <S-space> <ESC>
